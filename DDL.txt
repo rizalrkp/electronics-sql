@@ -1,0 +1,37 @@
+CREATE TABLE order_detail (
+    id varchar(255),
+    customer_id varchar(255),
+    order_date date,
+    sku_id varchar(255),
+    price int,
+    qty_ordered int,
+    before_discount float,
+    discount_amount float,
+    after_discount float,
+    is_gross int,
+    is_valid int,
+    is_net int,
+    payment_id int
+);
+
+CREATE TABLE sku_detail (
+    id varchar(255) primary key,
+    sku_name varchar(255),
+    base_price float,
+    cogs float,
+    category varchar(255)
+);
+
+CREATE TABLE payment_detail (
+      id int primary key,
+	payment_method varchar(255)
+);
+
+CREATE TABLE customer_detail (
+    id varchar(255) primary key,
+	registered_date date
+);
+
+ALTER TABLE order_detail ADD CONSTRAINT customer_id_fk FOREIGN KEY (customer_id) REFERENCES customer_detail(id) ON DELETE CASCADE;
+ALTER TABLE order_detail ADD CONSTRAINT sku_id_fk FOREIGN KEY (sku_id) REFERENCES sku_detail(id) ON DELETE CASCADE;
+ALTER TABLE order_detail ADD CONSTRAINT payment_id_fk FOREIGN KEY (payment_id) REFERENCES payment_detail(id) ON DELETE CASCADE;
